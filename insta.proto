@@ -1,0 +1,42 @@
+syntax="proto3";
+package ShortInstagram;
+import "google/protobuf/wrappers.proto";
+
+service Instagram{
+    rpc postMessage(PostMessage) returns(Tweet);
+    rpc likeMessage(ReactionMessage) returns(google.protobuf.StringValue); //this google thing is to send/return empty
+    rpc commentMessage(CommentMessage) returns(Tweet);
+    rpc viewMessages(google.protobuf.StringValue) returns(stream Tweet);
+}
+
+message PostMessage{
+
+    string message=1;
+    string time=2;
+}
+message Tweet{
+    string id=5;
+    string message=1;
+    string time=2;
+    int64 likes=3;
+    repeated string comments=4;
+}
+
+message CommentMessage{
+    string comment=1;
+    string messageId=2;
+}
+
+enum Reaction{
+    Like=0;
+    Dislike=1;
+}
+
+message ReactionMessage{
+    Reaction reaction =1;
+    string messageID=2;
+}
+
+
+
+    
